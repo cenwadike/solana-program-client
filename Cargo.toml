@@ -2,6 +2,11 @@
 name = "solana-program-client"
 version = "0.1.0"
 edition = "2021"
+description = "lightweight crate to call Solana programs"
+license = "MIT"
+homepage="https://github.com/cenwadike/solana-program-client"
+repository="https://github.com/cenwadike/solana-program-client"
+readme="README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
