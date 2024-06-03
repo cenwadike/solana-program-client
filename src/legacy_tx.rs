@@ -1,6 +1,6 @@
 use anchor_client;
 #[allow(unused_imports)]
-use borsh::{BorshDeserialize, BorshSerialize};
+pub use borsh::{BorshDeserialize, BorshSerialize};
 pub use solana_client::rpc_client::RpcClient;
 #[allow(unused_imports)]
 pub use solana_sdk::{

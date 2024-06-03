@@ -2,14 +2,14 @@ use std::str::FromStr;
 
 use base64::{engine::general_purpose, Engine as _};
 #[allow(unused_imports)]
-use borsh::{BorshDeserialize, BorshSerialize};
-use solana_address_lookup_table_program::state::AddressLookupTable;
-use solana_client::{
+pub use borsh::{BorshDeserialize, BorshSerialize};
+pub use solana_address_lookup_table_program::state::AddressLookupTable;
+pub use solana_client::{
     rpc_client::RpcClient, rpc_config::RpcSendTransactionConfig, rpc_request::RpcRequest,
 };
-use solana_sdk::instruction::AccountMeta;
+pub use solana_sdk::instruction::AccountMeta;
 #[allow(unused_imports)]
-use solana_sdk::{
+pub use solana_sdk::{
     address_lookup_table::AddressLookupTableAccount,
     commitment_config::{CommitmentConfig, CommitmentLevel},
     instruction::Instruction,
@@ -20,7 +20,7 @@ use solana_sdk::{
     signer::EncodableKey,
     transaction::{Transaction, VersionedTransaction},
 };
-use solana_transaction_status::UiTransactionEncoding;
+pub use solana_transaction_status::UiTransactionEncoding;
 
 use crate::legacy_tx::get_discriminant;
 
@@ -33,7 +33,7 @@ pub fn call_with_lookup_table<T>(
     lookup_table_key: &Pubkey,
     payer: &Keypair,
     accounts: Vec<AccountMeta>,
-) -> Result<(), Box<dyn std::error::Error>>
+) -> Result<Signature, Box<dyn std::error::Error>>
 where
     T: BorshSerialize,
 {
@@ -89,8 +89,7 @@ where
         CommitmentConfig::finalized(),
     )?;
 
-    // Ok(Signature::from_str(&signature)?)
-    Ok(())
+    Ok(Signature::from_str(&signature)?)
 }
 
 pub fn create_lookup_table(
@@ -238,8 +237,6 @@ mod test {
             &payer,
             accounts,
         );
-
-        println!("{:?}", res);
 
         assert!(res.is_ok());
     }
