@@ -20,7 +20,7 @@ pub struct UpdateBlob {
 }
 
 fn main() {
-    // create a Rpcclient connection
+    // create a Rpc client connection
     let connection = RpcClient::new("https://api.devnet.solana.com");
     let program_id = blob::ID;
 
@@ -51,7 +51,6 @@ fn main() {
         instruction_data,
         accounts,
     ).unwrap();
-
 }
 ```
 

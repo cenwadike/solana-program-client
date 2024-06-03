@@ -16,6 +16,7 @@ fn main() {
         data: "another data".as_bytes().to_vec(),
     };
     let payer: Keypair = Keypair::read_from_file("~/.config/solana/id.json").unwrap();
+    let signers = &[&payer];
 
     // create lookup table
     let latest_blockhash = connection
@@ -25,7 +26,7 @@ fn main() {
 
     // add accounts to lookup table
     let new_accounts = vec![program_id, payer.pubkey()];
-    update_lookup_table(
+    extend_lookup_table(
         &connection,
         &payer,
         latest_blockhash,
@@ -43,12 +44,14 @@ fn main() {
 
     // call program with lookup table
     let _tx_signature = call_with_lookup_table(
-        connection,
-        program_id,
+        &connection,
+        &program_id,
         instruction_name,
         instruction_data,
         &table_pk,
         &payer,
+        signers,
         accounts,
-    ).unwrap();
+    )
+    .unwrap();
 }

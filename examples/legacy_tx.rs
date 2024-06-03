@@ -9,7 +9,7 @@ pub struct UpdateBlob {
 }
 
 fn main() {
-    // create a Rpcclient connection
+    // create a Rpc client connection
     let connection = RpcClient::new("https://api.devnet.solana.com");
     let program_id = blob::ID;
 
@@ -25,20 +25,20 @@ fn main() {
         data: "data".as_bytes().to_vec(),
     };
 
+    let signers = &[&payer];
     // set up accounts
     let accounts = vec![
         AccountMeta::new(blob_account, false),
         AccountMeta::new(payer.pubkey(), true),
     ];
 
-    // call signed call
     let _tx_signature = signed_call(
-        connection,
-        program_id,
-        payer,
+        &connection,
+        &program_id,
+        &payer,
+        signers,
         instruction_name,
         instruction_data,
         accounts,
     ).unwrap();
-
 }

@@ -15,10 +15,71 @@ pub use solana_sdk::{
     transaction::Transaction,
 };
 
+/// Sign and submit a legacy transaction.
+///
+/// This method fully signs a transaction with all required signers, which
+/// must be present in the `keypairs` slice.
+///
+/// # Panics
+///
+/// Panics when signing or signature verification fails.
+/// 
+/// # Examples
+///
+/// This example uses the [`solana_program_client`] crate.
+///
+/// ```
+/// use solana_program_client::legacy_tx::*;
+/// #[derive(BorshSerialize, BorshDeserialize)]
+/// #[borsh(crate = "borsh")]
+/// pub struct UpdateBlob {
+///     pub data: Vec<u8>,
+/// }
+///
+/// fn main() {
+///     // create a Rpc client connection
+///     let connection = RpcClient::new("https://api.devnet.solana.com");
+///     let program_id = blob::ID;
+
+///     // get blob PDA
+///     let (blob_account, _) = Pubkey::find_program_address(&[&b"blob"[..]], &program_id);
+
+///     let payer = Keypair::read_from_file("~/.config/solana/id.json").unwrap();
+
+///     let instruction_name = "update_blob";
+
+///     //  construct instruction data
+///     let instruction_data = UpdateBlob {
+///         data: "data".as_bytes().to_vec(),
+///     };
+
+///     // setup signers
+///     let signers = &[&payer];
+/// 
+///     // set up accounts
+///     let accounts = vec![
+///         AccountMeta::new(blob_account, false),
+///         AccountMeta::new(payer.pubkey(), true),
+///     ];
+
+///     // call signed call
+///     let _tx_signature = signed_call(
+///         &connection,
+///         &program_id,
+///         &payer,
+///         signers,
+///         instruction_name,
+///         instruction_data,
+///         accounts,
+///     )
+///     .unwrap();
+/// }
+/// ```
 pub fn signed_call<T>(
-    connection: RpcClient,
-    program_id: Pubkey,
-    payer: Keypair,
+    connection: &RpcClient,
+    program_id: &Pubkey,
+    payer: &Keypair,
+    signers: &[&Keypair],
     instruction_name: &str,
     instruction_data: T,
     accounts: Vec<AccountMeta>,
@@ -46,7 +107,7 @@ where
     let mut tx = Transaction::new_unsigned(msg);
 
     // sign transaction
-    tx.sign(&[&payer], tx.message.recent_blockhash);
+    tx.sign(signers, tx.message.recent_blockhash);
 
     // send and confirm transaction
     let tx_signature = connection.send_and_confirm_transaction(&tx)?;
@@ -95,6 +156,7 @@ mod test {
             data: "another data".as_bytes().to_vec(),
         };
 
+        let signers = &[&payer];
         // set up accounts
         let accounts = vec![
             AccountMeta::new(blob_account, false),
@@ -102,9 +164,10 @@ mod test {
         ];
 
         let tx_signature = signed_call(
-            connection,
-            program_id,
-            payer,
+            &connection,
+            &program_id,
+            &payer,
+            signers,
             instruction_name,
             instruction_data,
             accounts,
