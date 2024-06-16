@@ -32,7 +32,7 @@ use crate::legacy_tx::get_discriminant;
 /// # Panics
 ///
 /// Panics when signing or signature verification fails.
-/// 
+///
 /// # Examples
 ///
 /// This example uses the [`solana_program_client`] crate.
@@ -55,7 +55,7 @@ use crate::legacy_tx::get_discriminant;
 ///     };
 ///     let payer: Keypair = Keypair::read_from_file("~/.config/solana/id.json").unwrap();
 ///     let signers = &[&payer];
-/// 
+///
 ///     // create lookup table
 ///     let latest_blockhash = connection
 ///         .get_latest_blockhash()
@@ -164,20 +164,20 @@ where
 
 /// create a lookup table with an authority account.
 ///
-/// This method submit transaction that creates a 
+/// This method submit transaction that creates a
 /// lookup table. Returns lookup table account public key.
 ///
 /// # Panics
 ///
 /// Panics when signature verification fails.
-/// 
+///
 /// # Examples
 ///
 /// This example uses the [`solana_program_client`] crate.
 ///
 /// ```
 /// use solana_program_client::versioned_tx::*;
-/// 
+///
 /// fn create_lookup_table() {
 ///     let connection = RpcClient::new("https://api.devnet.solana.com");
 ///     let payer: Keypair =
@@ -215,20 +215,20 @@ pub fn create_lookup_table(
 
 /// extend a lookup table.
 ///
-/// This method submit transaction that extends a 
+/// This method submit transaction that extends a
 /// lookup table. Returns lookup table account public key.
 ///
 /// # Panics
 ///
 /// Panics when signature verification fails.
-/// 
+///
 /// # Examples
 ///
 /// This example uses the [`solana_program_client`] crate.
 ///
 /// ```
 /// use solana_program_client::versioned_tx::*;
-/// 
+///
 /// fn test_update_lookup_table() {
 ///     let connection = RpcClient::new("https://api.devnet.solana.com");
 ///     let payer: Keypair =

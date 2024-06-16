@@ -1,8 +1,8 @@
-# Solana program client 
+# Solana program client
 
 `solana_program_client` is a lightweight crate to call Solana programs. It focuses on abstracting away relevant crates used for interacting with Solana programs.
 
-# Overview
+## Overview
 
 `solana_program_client` is a crate for developing clients for Solana programs and client-side web applications using Rust. The primary goal behind this project is to provide an ergonomic interface for interacting with Solana programs.
 
@@ -42,7 +42,7 @@ fn main() {
         AccountMeta::new(payer.pubkey(), true),
     ];
 
-    // call signed call
+    // signed call
     let _tx_signature = signed_call(
         connection,
         program_id,
@@ -54,27 +54,19 @@ fn main() {
 }
 ```
 
-# Features
-
-- Submit signed call to Solana program
-- Create a lookup table
-- Extend a lookup table
-- Submit versioned transaction
-
-
-# Motivation
+## Motivation
 
 - Inability to submit transactions through Rust Solana client without knowing the function discriminant.
 - Repeated code duplication when building Rust Solana client.
 
-# Development status
+## Development status
 
 The crate is currently under development and should be considered in the alpha stage. Additional work is needed on further extensions.
-# TODO
+
+## TODO
 
 - unsigned call
-- event subscription
 
-# Tip:
+## Tip
 
-solana: Fj72ApTUaYEwC3RKCKQ7iX3s8i8CVAnZW1f9PAXSKtbY
+If you want to leave a tip, you can send it to the following address: Fj72ApTUaYEwC3RKCKQ7iX3s8i8CVAnZW1f9PAXSKtbY (solana)

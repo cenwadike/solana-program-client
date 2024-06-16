@@ -40,5 +40,6 @@ fn main() {
         instruction_name,
         instruction_data,
         accounts,
-    ).unwrap();
+    )
+    .unwrap();
 }

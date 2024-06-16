@@ -23,7 +23,7 @@ pub use solana_sdk::{
 /// # Panics
 ///
 /// Panics when signing or signature verification fails.
-/// 
+///
 /// # Examples
 ///
 /// This example uses the [`solana_program_client`] crate.
@@ -55,7 +55,7 @@ pub use solana_sdk::{
 
 ///     // setup signers
 ///     let signers = &[&payer];
-/// 
+///
 ///     // set up accounts
 ///     let accounts = vec![
 ///         AccountMeta::new(blob_account, false),
